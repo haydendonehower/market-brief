@@ -1,4 +1,496 @@
-<!DOCTYPE html><html><body style="background:#070d1a;color:#fff;font-family:sans-serif;text-align:center;padding:60px">
-<h1 style="color:#4a7fff">Market Brief</h1>
-<p style="color:#7b9cdb">Your first brief will appear here tomorrow morning.</p>
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Brief — Monday, May 18, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #070d1a;
+      color: #e8eaf0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0d1b3e 0%, #1a2f5e 100%);
+      border-bottom: 2px solid #2e5ce6;
+      padding: 36px 24px 28px;
+      text-align: center;
+    }
+    .header-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #7b9cdb; margin-bottom: 6px; }
+    .header h1 { font-size: 32px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+    .header-date { font-size: 14px; color: #7b9cdb; margin-top: 6px; }
+
+    /* ── Layout ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 16px 60px; }
+
+    /* ── Section headings ── */
+    .section-label {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: #2e5ce6; font-weight: 700; margin: 32px 0 12px;
+    }
+
+    /* ── Tables ── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-size: 11px; color: #5a7ab0; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px;
+      padding: 8px 0; border-bottom: 1px solid #1e3a6e; text-align: left;
+    }
+    .data-table th.num, .data-table td.num { text-align: right; }
+    .data-row { border-bottom: 1px solid #111e38; }
+    .data-row:hover { background: #0f1d3a; }
+    .data-row td { padding: 11px 0; font-size: 14px; }
+    td.sym { font-weight: 700; color: #fff; width: 70px; }
+    td.name { color: #9aafd4; max-width: 200px; font-size: 13px; padding-right: 12px; }
+    td.num { text-align: right; color: #e8eaf0; padding-right: 16px; }
+
+    /* ── Context box ── */
+    .context-box {
+      background: #0f1d3a; border: 1px solid #1e3a6e; border-radius: 10px;
+      padding: 18px 20px; margin-top: 12px;
+    }
+    .context-box ul { list-style: none; padding: 0; }
+    .context-box li { font-size: 14px; color: #9aafd4; padding: 4px 0; line-height: 1.6; }
+    .context-box li::before { content: "• "; color: #2e5ce6; font-weight: 700; }
+
+    /* ── Callout grid ── */
+    .callout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
+    .callout {
+      background: #0f1d3a; border: 1px solid #1e3a6e; border-radius: 10px;
+      padding: 16px; text-align: center;
+    }
+    .callout.green { border-top: 3px solid #3ecf8e; }
+    .callout.red   { border-top: 3px solid #e05c5c; }
+    .callout.neutral { border-top: 3px solid #2e5ce6; }
+    .callout-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #5a7ab0; margin-bottom: 8px; }
+    .callout-ticker { font-size: 22px; font-weight: 700; color: #fff; }
+    .callout-name { font-size: 12px; color: #7b9cdb; margin-top: 2px; }
+    .callout-pct { font-size: 18px; font-weight: 700; margin-top: 6px; }
+
+    /* ── News ── */
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
+    .news-card {
+      background: #0f1d3a; border: 1px solid #1e3a6e; border-radius: 10px;
+      padding: 16px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .news-ticker { font-size: 11px; font-weight: 700; color: #2e5ce6; letter-spacing: 1px; text-transform: uppercase; }
+    .news-title { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.4; }
+    .article-summary { font-size: 12px; color: #7b9cdb; line-height: 1.5; }
+    .news-meta { font-size: 11px; color: #3a4f72; margin-top: auto; padding-top: 6px; }
+    .read-more { font-size: 12px; color: #4a7fff; text-decoration: none; margin-top: 4px; display: inline-block; }
+    .read-more:hover { text-decoration: underline; }
+
+    /* ── Concept box ── */
+    .concept-box {
+      background: linear-gradient(135deg, #0d2060, #1a3a7e);
+      border-left: 4px solid #2e5ce6; border-radius: 10px;
+      padding: 22px; margin-top: 12px;
+    }
+    .concept-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #7b9cdb; font-weight: 600; margin-bottom: 8px; }
+    .concept-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .concept-body { font-size: 14px; color: #9aafd4; line-height: 1.7; }
+
+    /* ── Footer ── */
+    .footer {
+      background: #060c1a; border-top: 1px solid #1a2d50;
+      text-align: center; padding: 20px 16px;
+      font-size: 11px; color: #3a4f72; line-height: 1.8;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 24px; }
+      .data-table th:nth-child(5),
+      .data-table td:nth-child(5),
+      .data-table th:nth-child(6),
+      .data-table td:nth-child(6) { display: none; }
+      td.name { max-width: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-label">Daily Intelligence</div>
+    <h1>Market Brief</h1>
+    <div class="header-date">Monday, May 18, 2026</div>
+  </div>
+
+  <div class="container">
+
+    <p class="section-label">Market Context</p>
+    <div class="context-box">
+      <ul><li>S&P 500 consolidating near flat.</li><li>Biggest mover: ^VIX (-3.26%)</li></ul>
+    </div>
+
+    <p class="section-label">Indices</p>
+    <table class="data-table">
+      <thead><tr>
+        <th>Symbol</th><th>Name</th><th class="num">Price</th>
+        <th>Day %</th><th>5-Day %</th><th>1-Mo %</th>
+      </tr></thead>
+      <tbody>
+              <tr class="data-row">
+                <td class="sym">^GSPC</td>
+                <td class="name">S&P 500</td>
+                <td class="num">$7,403.05</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:1%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.07%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+0.03%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+4.13%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">^DJI</td>
+                <td class="name">Dow Jones Industrial Average</td>
+                <td class="num">$49,686.12</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:6%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.32%</span></div></td>
+                <td style="color:#e05c5c;font-weight:600;">-0.15%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+0.49%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">^IXIC</td>
+                <td class="name">NASDAQ Composite</td>
+                <td class="num">$26,090.73</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:10%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.51%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+0.01%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+6.91%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">^VIX</td>
+                <td class="name">CBOE Volatility Index</td>
+                <td class="num">$17.82</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:65%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-3.26%</span></div></td>
+                <td style="color:#e05c5c;font-weight:600;">-0.94%</td>
+                <td style="color:#e05c5c;font-weight:600;">-5.56%</td>
+              </tr></tbody>
+    </table>
+
+    <p class="section-label">Mega-Cap</p>
+    <table class="data-table">
+      <thead><tr>
+        <th>Symbol</th><th>Name</th><th class="num">Price</th>
+        <th>Day %</th><th>5-Day %</th><th>1-Mo %</th>
+      </tr></thead>
+      <tbody>
+              <tr class="data-row">
+                <td class="sym">AAPL</td>
+                <td class="name">Apple Inc.</td>
+                <td class="num">$297.84</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:13%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.67%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+1.03%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+9.18%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">MSFT</td>
+                <td class="name">Microsoft Corporation</td>
+                <td class="num">$423.54</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:18%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.92%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+3.87%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+1.31%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">NVDA</td>
+                <td class="name">NVIDIA Corporation</td>
+                <td class="num">$222.32</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:19%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.93%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+0.70%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+10.03%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">AMZN</td>
+                <td class="name">Amazon.com, Inc.</td>
+                <td class="num">$264.86</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:17%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.86%</span></div></td>
+                <td style="color:#e05c5c;font-weight:600;">-0.36%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+6.68%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">GOOGL</td>
+                <td class="name">Alphabet Inc.</td>
+                <td class="num">$396.94</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:8%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.42%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+2.48%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+17.64%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">META</td>
+                <td class="name">Meta Platforms, Inc.</td>
+                <td class="num">$611.21</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:3%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.13%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+1.36%</td>
+                <td style="color:#e05c5c;font-weight:600;">-8.90%</td>
+              </tr></tbody>
+    </table>
+
+    <p class="section-label">Macro (Gold · Oil · Bonds · Dollar)</p>
+    <table class="data-table">
+      <thead><tr>
+        <th>Symbol</th><th>Name</th><th class="num">Price</th>
+        <th>Day %</th><th>5-Day %</th><th>1-Mo %</th>
+      </tr></thead>
+      <tbody>
+              <tr class="data-row">
+                <td class="sym">GLD</td>
+                <td class="name">SPDR Gold Shares</td>
+                <td class="num">$418.43</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:7%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.34%</span></div></td>
+                <td style="color:#e05c5c;font-weight:600;">-3.35%</td>
+                <td style="color:#e05c5c;font-weight:600;">-5.35%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">USO</td>
+                <td class="name">United States Oil Fund</td>
+                <td class="num">$149.29</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:13%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.63%</span></div></td>
+                <td style="color:#3ecf8e;font-weight:600;">+3.46%</td>
+                <td style="color:#3ecf8e;font-weight:600;">+23.05%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">TLT</td>
+                <td class="name">iShares 20+ Year Treasury Bond </td>
+                <td class="num">$83.56</td>
+                <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:5%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.26%</span></div></td>
+                <td style="color:#e05c5c;font-weight:600;">-1.68%</td>
+                <td style="color:#e05c5c;font-weight:600;">-3.65%</td>
+              </tr>
+              <tr class="data-row">
+                <td class="sym">DXY=X</td>
+                <td class="name">DXY=X</td>
+                <td class="num">—</td>
+                <td></td>
+                <td style="color:#f0a84a;font-weight:600;">—</td>
+                <td style="color:#f0a84a;font-weight:600;">—</td>
+              </tr></tbody>
+    </table>
+
+    <p class="section-label">Sector Rotation — SPDR ETFs</p>
+    
+        <div class="callout-grid">
+          <div class="callout green">
+            <div class="callout-label">▲ Leading Today</div>
+            <div class="callout-ticker">XLE</div>
+            <div class="callout-name">Energy</div>
+            <div class="callout-pct" style="color:#3ecf8e">+1.90%</div>
+          </div>
+          <div class="callout red">
+            <div class="callout-label">▼ Lagging Today</div>
+            <div class="callout-ticker">XLK</div>
+            <div class="callout-name">Technology</div>
+            <div class="callout-pct" style="color:#e05c5c">-0.80%</div>
+          </div>
+          <div class="callout neutral">
+            <div class="callout-label">Spread</div>
+            <div class="callout-ticker">2.70pp</div>
+            <div class="callout-name">Wide — clear rotation</div>
+          </div>
+        </div>
+    <table class="data-table" style="margin-top:14px;">
+      <thead><tr>
+        <th>ETF</th><th>Sector</th><th class="num">Price</th>
+        <th>Day %</th><th>5-Day %</th><th>1-Mo %</th>
+      </tr></thead>
+      <tbody>
+          <tr class="data-row">
+            <td class="sym">XLE</td>
+            <td class="name">Energy</td>
+            <td class="num">$60.58</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:38%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+1.90%</span></div></td>
+            <td style="color:#3ecf8e;font-weight:600;">+5.23%</td>
+            <td style="color:#3ecf8e;font-weight:600;">+10.01%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLF</td>
+            <td class="name">Financials</td>
+            <td class="num">$51.74</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:30%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+1.48%</span></div></td>
+            <td style="color:#3ecf8e;font-weight:600;">+0.31%</td>
+            <td style="color:#e05c5c;font-weight:600;">-1.69%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLP</td>
+            <td class="name">Consumer Staples</td>
+            <td class="num">$85.90</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:26%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+1.30%</span></div></td>
+            <td style="color:#3ecf8e;font-weight:600;">+1.73%</td>
+            <td style="color:#3ecf8e;font-weight:600;">+4.26%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLRE</td>
+            <td class="name">Real Estate</td>
+            <td class="num">$43.75</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:13%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.67%</span></div></td>
+            <td style="color:#e05c5c;font-weight:600;">-1.86%</td>
+            <td style="color:#e05c5c;font-weight:600;">-1.99%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLV</td>
+            <td class="name">Health Care</td>
+            <td class="num">$145.72</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:13%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.64%</span></div></td>
+            <td style="color:#e05c5c;font-weight:600;">-0.09%</td>
+            <td style="color:#e05c5c;font-weight:600;">-1.15%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLC</td>
+            <td class="name">Comm. Services</td>
+            <td class="num">$116.98</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:11%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.57%</span></div></td>
+            <td style="color:#3ecf8e;font-weight:600;">+0.97%</td>
+            <td style="color:#e05c5c;font-weight:600;">-1.49%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLY</td>
+            <td class="name">Consumer Disc.</td>
+            <td class="num">$116.32</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:5%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.27%</span></div></td>
+            <td style="color:#e05c5c;font-weight:600;">-1.67%</td>
+            <td style="color:#e05c5c;font-weight:600;">-2.96%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLU</td>
+            <td class="name">Utilities</td>
+            <td class="num">$43.94</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:2%;height:100%;background:#3ecf8e;float:right;border-radius:2px;"></div></div><span style="color:#3ecf8e;font-weight:600;font-size:13px;">+0.08%</span></div></td>
+            <td style="color:#e05c5c;font-weight:600;">-2.77%</td>
+            <td style="color:#e05c5c;font-weight:600;">-3.96%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLB</td>
+            <td class="name">Materials</td>
+            <td class="num">$50.22</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:9%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.46%</span></div></td>
+            <td style="color:#e05c5c;font-weight:600;">-3.68%</td>
+            <td style="color:#e05c5c;font-weight:600;">-3.85%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLI</td>
+            <td class="name">Industrials</td>
+            <td class="num">$170.75</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:13%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.63%</span></div></td>
+            <td style="color:#e05c5c;font-weight:600;">-2.06%</td>
+            <td style="color:#e05c5c;font-weight:600;">-1.81%</td>
+          </tr>
+          <tr class="data-row">
+            <td class="sym">XLK</td>
+            <td class="name">Technology</td>
+            <td class="num">$174.36</td>
+            <td><div style="display:flex;align-items:center;gap:4px;"><div style="width:60px;height:4px;background:#1a2d50;border-radius:2px;overflow:hidden;"><div style="width:16%;height:100%;background:#e05c5c;float:left;border-radius:2px;"></div></div><span style="color:#e05c5c;font-weight:600;font-size:13px;">-0.80%</span></div></td>
+            <td style="color:#e05c5c;font-weight:600;">-0.48%</td>
+            <td style="color:#3ecf8e;font-weight:600;">+12.81%</td>
+          </tr></tbody>
+    </table>
+
+    <p class="section-label">Top Mover News</p>
+    <div class="news-grid">
+            <div class="news-card">
+              <div class="news-ticker">^VIX</div>
+              <div class="news-title">Defensive ETFs for Investors Seeking Safety in Volatile Markets</div>
+              <p class="article-summary">Geopolitical fears intensified after Trump's remarks over the weekend raised oil prices, reigniting volatility and strengthening the case for defensive ETF exposure.</p>
+              <div class="news-meta">Zacks  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/markets/stocks/articles/defensive-etfs-investors-seeking-safety-161000501.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">^VIX</div>
+              <div class="news-title">Market Fear Index Jumps as Soaring Bond Yields Spook Investors</div>
+              <p class="article-summary">The market was feeling on edge Friday after the yield on the 10-year Treasury note hit its highest level in about a year. The Cboe Volatility Index, or VIX, jumped 1.4 points to 18.6 in early trading.</p>
+              <div class="news-meta">Barrons.com  ·  2026-05-15</div>
+              <a href="https://www.barrons.com/livecoverage/stock-market-news-today-051526/card/market-fear-index-jumps-as-soaring-bond-yields-spook-investors-xkbQjAYU3igXhp8gzcDt?siteid=yhoof2&yptr=yahoo" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">^VIX</div>
+              <div class="news-title">Nvidia earnings alone won’t rescue the S&P 500 from its new sell signal</div>
+              <p class="article-summary">Overbought warnings come ahead of a massive tech and retail earnings lineup.</p>
+              <div class="news-meta">MarketWatch  ·  2026-05-15</div>
+              <a href="https://www.marketwatch.com/story/nvidia-earnings-alone-wont-rescue-the-s-p-500-from-its-new-sell-signal-5a41acc3" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">^VIX</div>
+              <div class="news-title">Why Volatility ETFs May Matter More in Today's Uneven Market</div>
+              <p class="article-summary">Markets look resilient, but geopolitical and inflation risks still linger. Volatility ETFs could help investors hedge against potential downside risks.</p>
+              <div class="news-meta">Zacks  ·  2026-05-14</div>
+              <a href="https://finance.yahoo.com/markets/options/articles/why-volatility-etfs-may-matter-145300299.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">NVDA</div>
+              <div class="news-title">Tech stocks today: Elon Musk loses court battle against OpenAI, Samsung extends talks to avert looming strike</div>
+              <p class="article-summary">Nvidia earnings report is expected to be the main event for tech investors this week.</p>
+              <div class="news-meta">Yahoo Finance  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/sectors/technology/live/tech-stocks-today-elon-musk-loses-court-battle-against-openai-samsung-extends-talks-to-avert-looming-strike-111103140.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">NVDA</div>
+              <div class="news-title">Earnings live updates: Nvidia and Walmart, 2 important bellwethers for the US economy, report results this week</div>
+              <p class="article-summary">Investors will get highly anticipated quarterly results from Nvidia (NVDA) on Wednesday in what’s expected to be the marquee earnings event of the week.</p>
+              <div class="news-meta">Yahoo Finance  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/markets/live/earnings-live-updates-nvidia-and-walmart-2-important-bellwethers-for-the-us-economy-report-results-this-week-115413665.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">NVDA</div>
+              <div class="news-title">Stocks making big moves yesterday: Nvidia, Salesforce, The Trade Desk, Wayfair, and Dynatrace</div>
+              <p class="article-summary">Check out the companies making headlines yesterday:</p>
+              <div class="news-meta">StockStory  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-yesterday-211655409.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">NVDA</div>
+              <div class="news-title">Equity Markets Mixed as Trump Aborts Plan to Attack Iran</div>
+              <p class="article-summary">US equity markets closed mixed Monday as President Donald Trump said the US was postponing a plan to</p>
+              <div class="news-meta">MT Newswires  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/markets/stocks/articles/equity-markets-mixed-trump-aborts-210354385.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">MSFT</div>
+              <div class="news-title">Elon Musk loses court battle against OpenAI</div>
+              <p class="article-summary">A California jury, on Monday found OpenAI cofounders CEO Sam Altman and president Greg Brockman not liable of unjustly enriching themselves by turning the once nonprofit company into a for-profit business.</p>
+              <div class="news-meta">Yahoo Finance  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/news/elon-musk-loses-court-battle-against-openai-175338472.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">MSFT</div>
+              <div class="news-title">Musk loses blockbuster OpenAI suit as jury says too late</div>
+              <p class="article-summary">A federal jury ruled Monday that Elon Musk waited too long to sue OpenAI and its co-founders, delivering a decisive victory to the ChatGPT startup and ending one of Silicon Valley's most closely watched courtroom battles."This is an important victory for Altman and OpenAI and clears the path for an IPO by removing this black cloud," Dan Ives of Wedbush Securities told AFP.
+"Musk was creating noise around this lawsuit but ultimately it was more of a soap opera than a long-term negative for OpenAI</p>
+              <div class="news-meta">AFP  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/sectors/technology/articles/musk-loses-blockbuster-openai-suit-180225629.html" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">MSFT</div>
+              <div class="news-title">Elon Musk Loses Court Battle With OpenAI’s Sam Altman. These Are the Winners.</div>
+              <p class="article-summary">A jury in Oakland, Calif., said the AI company isn’t liable for claims brought by the billionaire Tesla CEO.</p>
+              <div class="news-meta">Barrons.com  ·  2026-05-18</div>
+              <a href="https://www.barrons.com/articles/elon-musk-loses-court-battle-openai-ef87160e?siteid=yhoof2&yptr=yahoo" class="read-more" target="_blank">Read more →</a>
+            </div>
+            <div class="news-card">
+              <div class="news-ticker">MSFT</div>
+              <div class="news-title">Buy the Dip in Nvidia Stock off of Record Highs as Q1 Earnings Approach?</div>
+              <p class="article-summary">Ahead of its Q1 report on Wednesday, May 20, Nvidia stock has pulled back roughly 6% from its recent record high of $236 a share (post-split basis),</p>
+              <div class="news-meta">Zacks  ·  2026-05-18</div>
+              <a href="https://finance.yahoo.com/markets/stocks/articles/buy-dip-nvidia-stock-off-200100924.html" class="read-more" target="_blank">Read more →</a>
+            </div></div>
+
+    <p class="section-label">Concept of the Day</p>
+    <div class="concept-box">
+      <div class="concept-label">Build Your Knowledge</div>
+      <div class="concept-title">Why do rising bond yields hurt tech stocks?</div>
+      <div class="concept-body">
+        Tech companies are valued on <em>future</em> earnings. A higher interest rate (yield)
+        is the "discount rate" applied to those future dollars — making them worth less in
+        today's terms. So when yields spike, growth and tech stocks fall hardest. Industrials
+        and banks are less affected because they earn more in a high-rate environment.
+        This is why the Nasdaq often diverges from the Dow during rate-driven moves.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Market Brief · Updated daily via GitHub Actions<br>
+    Data: yFinance (Yahoo Finance) · Monday, May 18, 2026
+  </div>
+
+</body>
+</html>
