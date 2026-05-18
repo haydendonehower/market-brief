@@ -1,0 +1,45 @@
+name: Daily Market Brief
+
+on:
+  schedule:
+    # 7:30 AM Eastern (11:30 UTC) on weekdays
+    - cron: "30 11 * * 1-5"
+  workflow_dispatch:  # manual trigger from GitHub Actions tab
+
+# Allow the workflow to push the updated HTML back to the repo
+permissions:
+  contents: write
+
+jobs:
+  send-brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily brief (build page + send email)
+        env:
+          GMAIL_ADDRESS:   ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASS:  ${{ secrets.GMAIL_APP_PASS }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          PAGE_URL:        ${{ secrets.PAGE_URL }}
+        run: python3 daily_brief.py
+
+      - name: Commit and push updated page
+        run: |
+          git config user.name  "market-brief-bot"
+          git config user.email "actions@github.com"
+          git add docs/index.html
+          git diff --staged --quiet || git commit -m "brief: $(date +'%Y-%m-%d')"
+          git push
