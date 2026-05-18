@@ -44,19 +44,29 @@ def main():
 
     # ── 1. Fetch ─────────────────────────────────────────────────────────────
     print("▶ Fetching market data...")
-    from fetcher import fetch_all
-    data = fetch_all()
-    print(f"  {data['date']} | movers: {[m['symbol'] for m in data['movers']]}")
+    try:
+        from fetcher import fetch_all
+        data = fetch_all()
+        print(f"  {data['date']} | movers: {[m['symbol'] for m in data['movers']]}")
+    except Exception as e:
+        print(f"  FETCH ERROR: {e}")
+        import traceback; traceback.print_exc()
+        sys.exit(1)
 
     # ── 2. Build HTML page ───────────────────────────────────────────────────
     if not args.skip_html:
         print("▶ Building HTML page...")
-        from html_builder import build_page
-        DOCS_DIR.mkdir(exist_ok=True)
-        html = build_page(data, page_url)
-        out_path = DOCS_DIR / "index.html"
-        out_path.write_text(html, encoding="utf-8")
-        print(f"  Saved → {out_path}")
+        try:
+            from html_builder import build_page
+            DOCS_DIR.mkdir(exist_ok=True)
+            html = build_page(data, page_url)
+            out_path = DOCS_DIR / "index.html"
+            out_path.write_text(html, encoding="utf-8")
+            print(f"  Saved → {out_path}")
+        except Exception as e:
+            print(f"  HTML BUILD ERROR: {e}")
+            import traceback; traceback.print_exc()
+            sys.exit(1)
     else:
         print("▶ Skipping HTML build (--skip-html)")
 
@@ -66,8 +76,15 @@ def main():
         gmail_address = require_env("GMAIL_ADDRESS")
         app_password  = require_env("GMAIL_APP_PASS")
         recipient     = os.environ.get("RECIPIENT_EMAIL") or gmail_address
-        from mailer import send_email
-        send_email(data, page_url, recipient, gmail_address, app_password)
+        print(f"  From: {gmail_address}  →  To: {recipient}")
+        print(f"  App password length: {len(app_password)} chars")
+        try:
+            from mailer import send_email
+            send_email(data, page_url, recipient, gmail_address, app_password)
+        except Exception as e:
+            print(f"  EMAIL ERROR: {e}")
+            import traceback; traceback.print_exc()
+            sys.exit(1)
     else:
         print("▶ Skipping email (--skip-email)")
 
